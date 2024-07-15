@@ -1,0 +1,65 @@
+.cafe-item {
+    display: flex;
+    flex-direction: column;
+    background-color: #ffffff;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    overflow: hidden;
+  }
+  
+  .cafe-image {
+    height: 200px;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+  }
+  
+  .cafe-details {
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    flex-grow: 1;
+  }
+  
+  .cafe-details h3 {
+    font-weight: 600;
+    color: #2c3e50;
+    margin: 0 0 10px 0;
+  }
+  
+  .cafe-details p {
+    font-weight: 400;
+    color: #7f8c8d;
+    margin: 0 0 15px 0;
+    flex-grow: 1;
+  }
+  
+  .price-action {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  .precio {
+    font-weight: 600;
+    color: #e67e22;
+    font-size: 18px;
+  }
+  
+  .add-button {
+    background: none;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 20px;
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: 500;
+    transition: background-color 0.3s, transform 0.3s;
+    color: #333;
+  }
+  
+  .add-button:hover {
+    background-color: #e0e0e0;
+    transform: translateY(-2px);
+  }
