@@ -1,65 +1,106 @@
 .cafe-item {
-    display: flex;
-    flex-direction: column;
-    background-color: #ffffff;
-    border-radius: 8px;
-    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-    overflow: hidden;
-  }
-  
-  .cafe-image {
-    height: 200px;
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
-  }
-  
-  .cafe-details {
-    padding: 20px;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    flex-grow: 1;
-  }
-  
-  .cafe-details h3 {
-    font-weight: 600;
-    color: #2c3e50;
-    margin: 0 0 10px 0;
-  }
-  
-  .cafe-details p {
-    font-weight: 400;
-    color: #7f8c8d;
-    margin: 0 0 15px 0;
-    flex-grow: 1;
-  }
-  
-  .price-action {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-  }
-  
-  .precio {
-    font-weight: 600;
-    color: #e67e22;
-    font-size: 18px;
-  }
-  
-  .add-button {
-    background: none;
-    border: none;
-    padding: 10px 20px;
-    border-radius: 20px;
-    cursor: pointer;
-    font-size: 16px;
-    font-weight: 500;
-    transition: background-color 0.3s, transform 0.3s;
-    color: #333;
-  }
-  
-  .add-button:hover {
-    background-color: #e0e0e0;
-    transform: translateY(-2px);
-  }
+  display: flex;
+  flex-direction: column;
+  background-color: #ffffff;
+  border-radius: 8px;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+  overflow: hidden;
+  margin-bottom: 20px;
+}
+
+.cafe-image {
+  height: 200px;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+.cafe-details {
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.cafe-details h3 {
+  font-weight: 600;
+  color: #2c3e50;
+  margin: 0 0 10px 0;
+}
+
+.cafe-details p {
+  font-weight: 400;
+  color: #7f8c8d;
+  margin: 0 0 15px 0;
+}
+
+.price-action {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 10px;
+}
+
+.precio {
+  font-weight: 600;
+  color: #e67e22;
+  font-size: 18px;
+}
+
+.add-button {
+  background: none;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 20px;
+  cursor: pointer;
+  font-size: 16px;
+  font-weight: 500;
+  transition: background-color 0.3s, transform 0.3s;
+  color: #333;
+  background-color: #f0f0f0;
+}
+
+.add-button:hover {
+  background-color: #e0e0e0;
+  transform: translateY(-2px);
+}
+
+.cafe-options {
+  padding: 20px;
+  background-color: #f9f9f9;
+  border-top: 1px solid #e0e0e0;
+}
+
+.option {
+  margin-bottom: 15px;
+}
+
+.option label {
+  display: block;
+  margin-bottom: 5px;
+  font-weight: 500;
+}
+
+.option select {
+  width: 100%;
+  padding: 8px;
+  border-radius: 4px;
+  border: 1px solid #ddd;
+}
+
+.confirm-add-button {
+  width: 100%;
+  padding: 10px;
+  background-color: #2ecc71;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 16px;
+  font-weight: 500;
+  transition: background-color 0.3s;
+}
+
+.confirm-add-button:hover {
+  background-color: #27ae60;
+}

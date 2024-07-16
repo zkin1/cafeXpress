@@ -10,10 +10,12 @@ function App() {
   const [carrito, setCarrito] = useState([]);
 
   const agregarAlCarrito = (item) => {
-    const itemEnCarrito = carrito.find(i => i.id === item.id);
+    const itemEnCarrito = carrito.find(i => i.id === item.id && i.size === item.size && i.milk === item.milk);
     if (itemEnCarrito) {
       setCarrito(carrito.map(i =>
-        i.id === item.id ? { ...i, cantidad: i.cantidad + 1 } : i
+        i.id === item.id && i.size === item.size && i.milk === item.milk
+          ? { ...i, cantidad: i.cantidad + 1 }
+          : i
       ));
     } else {
       setCarrito([...carrito, { ...item, cantidad: 1 }]);

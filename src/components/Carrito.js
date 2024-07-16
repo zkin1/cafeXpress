@@ -17,7 +17,6 @@ function Carrito({ items, eliminarItem, actualizarCantidad, total }) {
   const handlePaymentSubmit = ({ email, name, orderCode }) => {
     setShowPagoForm(false);
     setOrderConfirmation({ email, name, orderCode });
-    // Aquí deberías enviar un correo real al cliente
     console.log(`Correo enviado a ${email} con el código de pedido ${orderCode}`);
   };
 
@@ -40,15 +39,25 @@ function Carrito({ items, eliminarItem, actualizarCantidad, total }) {
       ) : (
         <>
           {items.map(item => (
-            <div key={item.id} className="carrito-item">
-              <span>{item.name}</span>
-              <div className="cantidad-control">
-                <button className="cantidad-btn" onClick={() => actualizarCantidad(item.id, item.cantidad - 1)}>-</button>
-                <span>{item.cantidad}</span>
-                <button className="cantidad-btn" onClick={() => actualizarCantidad(item.id, item.cantidad + 1)}>+</button>
+            <div key={`${item.id}-${item.size || ''}-${item.milk || ''}`} className="carrito-item">
+              <div className="item-details">
+                <h3>{item.name}</h3>
+                {item.size && item.milk && (
+                  <>
+                    <p>Tamaño: {item.size === 'small' ? 'Pequeño' : item.size === 'medium' ? 'Mediano' : 'Grande'}</p>
+                    <p>Leche: {item.milk === 'normal' ? 'Normal' : item.milk === 'descremada' ? 'Descremada' : item.milk === 'almendras' ? 'Almendras' : 'Soya'}</p>
+                  </>
+                )}
               </div>
-              <span>${formatPrice(item.price * item.cantidad)}</span>
-              <button className="eliminar-btn" onClick={() => eliminarItem(item.id)}>Eliminar</button>
+              <div className="item-actions">
+                <div className="cantidad-control">
+                  <button className="cantidad-btn" onClick={() => actualizarCantidad(item.id, item.cantidad - 1, item.size, item.milk)}>-</button>
+                  <span>{item.cantidad}</span>
+                  <button className="cantidad-btn" onClick={() => actualizarCantidad(item.id, item.cantidad + 1, item.size, item.milk)}>+</button>
+                </div>
+                <span className="item-price">${formatPrice(item.price * item.cantidad)}</span>
+                <button className="eliminar-btn" onClick={() => eliminarItem(item.id, item.size, item.milk)}>Eliminar</button>
+              </div>
             </div>
           ))}
           <div className="carrito-total">

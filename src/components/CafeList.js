@@ -12,7 +12,7 @@ function CafeList({ agregarAlCarrito }) {
   return (
     <div className="cafe-list">
       {cafeItems.map(item => (
-        <CafeItem key={item.id} {...item} agregarAlCarrito={() => agregarAlCarrito(item)} />
+        <CafeItem key={item.id} {...item} agregarAlCarrito={agregarAlCarrito} isCoffee={true} />
       ))}
     </div>
   );
