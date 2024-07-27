@@ -74,7 +74,7 @@ function CafeItem({ id, name, description, price, imageUrl, agregarAlCarrito, is
             Confirmar y agregar al carrito
           </button>
         </div>
-      )}
+      )} 
     </div>
   );
 }

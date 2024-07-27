@@ -1,18 +1,33 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import CafeItem from './CafeItem';
-import '../styles/CafeList.css';
+
 
 function CafeList({ agregarAlCarrito }) {
-  const cafeItems = [
-    { id: 1, name: 'Café Americano', description: 'Café negro clásico', price: 10, imageUrl: 'https://via.placeholder.com/200x200?text=Café+Americano' },
-    { id: 2, name: 'Cappuccino', description: 'Espresso con leche espumosa', price: 15, imageUrl: 'https://via.placeholder.com/200x200?text=Cappuccino' },
-    { id: 3, name: 'Latte', description: 'Café con leche cremosa', price: 12, imageUrl: 'https://via.placeholder.com/200x200?text=Latte' },
-  ];
+  const [cafeItems, setCafeItems] = useState([]);
+
+  useEffect(() => {
+    fetch('http://localhost:3001/api/products')
+      .then(response => {
+        if (!response.ok) {
+          throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        return response.json();
+      })
+      .then(data => {
+        if (data.message === 'success') {
+          setCafeItems(data.data);
+        } else {
+          console.error('Error al obtener productos:', data.error);
+        }
+      })
+      .catch(error => console.error('Error:', error));
+  }, []);
+  
 
   return (
     <div className="cafe-list">
       {cafeItems.map(item => (
-        <CafeItem key={item.id} {...item} agregarAlCarrito={agregarAlCarrito} isCoffee={true} />
+        <CafeItem key={item.id} {...item} agregarAlCarrito={agregarAlCarrito} isCoffee={item.is_coffee} />
       ))}
     </div>
   );
