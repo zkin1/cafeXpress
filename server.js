@@ -51,9 +51,9 @@ const asyncHandler = fn => (req, res, next) =>
 
 // Simulación de WebPay
 const simulateWebPay = {
-  createTransaction: (buyOrder, sessionId, amount, returnUrl) => {
+  ccreateTransaction: (buyOrder, sessionId, amount, returnUrl) => {
     return Promise.resolve({
-      url: `http://localhost:${port}/simulated-webpay?buyOrder=${buyOrder}&amount=${amount}`,
+      url: `http://localhost:${port}/simulated-webpay?buyOrder=${buyOrder}&amount=${amount}&returnUrl=${encodeURIComponent(returnUrl)}`,
       token: uuidv4()
     });
   },
@@ -265,6 +265,59 @@ app.post('/create-transaction', asyncHandler(async (req, res) => {
   const sessionId = uuidv4();
   const returnUrl = `${req.protocol}://${req.get('host')}/webpay-return`;
 
+
+  app.post('/api/create-order', asyncHandler(async (req, res) => {
+    const { orderNumber, customerName, notificacionEmail, emailNotificacion, total, items } = req.body;
+  
+    db.run('BEGIN TRANSACTION');
+  
+    try {
+      // Insertar en la tabla orders
+      const result = await new Promise((resolve, reject) => {
+        db.run(
+          'INSERT INTO orders (name, email, total_amount, status, order_token) VALUES (?, ?, ?, ?, ?)',
+          [customerName, emailNotificacion || null, total, 'pending', orderNumber],
+          function(err) {
+            if (err) reject(err);
+            else resolve(this);
+          }
+        );
+      });
+  
+      const orderId = result.lastID;
+  
+      // Insertar items en order_details
+      const stmt = db.prepare('INSERT INTO order_details (order_id, product_id, quantity, price, size, milk_type) VALUES (?, ?, ?, ?, ?, ?)');
+      for (const item of items) {
+        await new Promise((resolve, reject) => {
+          stmt.run(
+            [orderId, item.id, item.cantidad, item.price, item.size || null, item.milk || null],
+            (err) => {
+              if (err) reject(err);
+              else resolve();
+            }
+          );
+        });
+      }
+      stmt.finalize();
+  
+      await new Promise((resolve, reject) => {
+        db.run('COMMIT', (err) => {
+          if (err) reject(err);
+          else resolve();
+        });
+      });
+  
+      res.json({ success: true, orderId, orderNumber });
+    } catch (error) {
+      await new Promise((resolve) => {
+        db.run('ROLLBACK', resolve);
+      });
+      console.error('Error al crear la orden:', error);
+      res.status(500).json({ error: 'Error al crear la orden' });
+    }
+  }));
+
   db.run('BEGIN TRANSACTION');
 
   try {
@@ -349,12 +402,12 @@ app.get('/webpay-return', (req, res) => {
 
 // Ruta para simular la página de pago de WebPay
 app.get('/simulated-webpay', (req, res) => {
-  const { buyOrder, amount } = req.query;
+  const { buyOrder, amount, returnUrl } = req.query;
   res.send(`
     <h1>Simulación de WebPay</h1>
     <p>Orden de compra: ${buyOrder}</p>
     <p>Monto: $${amount}</p>
-    <form action="/webpay-return" method="GET">
+    <form action="${returnUrl}" method="GET">
       <input type="hidden" name="token_ws" value="${uuidv4()}">
       <input type="hidden" name="buyOrder" value="${buyOrder}">
       <button type="submit">Pagar</button>

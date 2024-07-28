@@ -1,48 +1,102 @@
 .pago-overlay {
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background-color: rgba(0, 0, 0, 0.5);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  }
-  
-  .pago-form {
-    background-color: white;
-    padding: 20px;
-    border-radius: 10px;
-    width: 300px;
-  }
-  
-  .pago-form input {
-    width: 90%;
-    padding: 10px;
-    margin-bottom: 10px;
-    border: 1px solid #ddd;
-    border-radius: 5px;
-  }
-  
-  .pago-form button {
-    width: 100%;
-    padding: 10px;
-    margin-top: 10px;
-    border: none;
-    border-radius: 5px;
-    background-color: #2ecc71;
-    color: white;
-    cursor: pointer;
-  }
-  
-  .pago-form button[type="button"] {
-    background-color: #e74c3c;
-  }
-  
-  .webpay-simulation {
-    background-color: #f0f0f0;
-    padding: 10px;
-    margin: 10px 0;
-    border-radius: 5px;
-  }
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.pago-form {
+  background-color: white;
+  padding: 30px;
+  border-radius: 10px;
+  width: 350px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.pago-form h2 {
+  margin-bottom: 20px;
+  color: #333;
+  text-align: center;
+}
+
+.input-group {
+  margin-bottom: 20px;
+}
+
+.input-group label {
+  display: block;
+  margin-bottom: 5px;
+  color: #555;
+  font-weight: bold;
+}
+
+.pago-form input {
+  width: 100%;
+  padding: 12px;
+  margin-bottom: 10px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  font-size: 16px;
+  transition: border-color 0.3s ease;
+}
+
+.pago-form input:focus {
+  border-color: #2ecc71;
+  outline: none;
+}
+
+.total-amount {
+  background-color: #f8f8f8;
+  padding: 10px;
+  border-radius: 5px;
+  margin-bottom: 20px;
+  text-align: center;
+  font-weight: bold;
+}
+
+.pago-form button {
+  width: 100%;
+  padding: 12px;
+  margin-top: 10px;
+  border: none;
+  border-radius: 5px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.pago-form button[type="submit"] {
+  background-color: #2ecc71;
+  color: white;
+}
+
+.pago-form button[type="submit"]:hover {
+  background-color: #27ae60;
+}
+
+.pago-form button[type="button"] {
+  background-color: #e74c3c;
+  color: white;
+}
+
+.pago-form button[type="button"]:hover {
+  background-color: #c0392b;
+}
+
+.error-message {
+  color: #e74c3c;
+  margin-bottom: 10px;
+  text-align: center;
+}
+
+.webpay-simulation {
+  background-color: #f0f0f0;
+  padding: 10px;
+  margin: 10px 0;
+  border-radius: 5px;
+}

@@ -7,12 +7,14 @@ import Carrito from './components/Carrito';
 import Comandas from './components/Comandas';
 import LoginEmpleado from './components/LoginEmpleado';
 import ConfirmacionPago from './components/ConfirmacionPago';
+import ConfirmacionPedido from './components/ConfirmacionPedido';
 import './App.css';
 
 function App() {
   const [categoria, setCategoria] = useState('cafe');
   const [carrito, setCarrito] = useState([]);
   const [esEmpleado, setEsEmpleado] = useState(false);
+  const [showConfirmacionPedido, setShowConfirmacionPedido] = useState(false);
 
   useEffect(() => {
     const empleadoAutenticado = localStorage.getItem('empleadoAutenticado');
@@ -20,7 +22,6 @@ function App() {
       setEsEmpleado(true);
     }
     
-    // Cargar carrito desde localStorage
     const carritoGuardado = localStorage.getItem('carrito');
     if (carritoGuardado) {
       setCarrito(JSON.parse(carritoGuardado));
@@ -28,7 +29,6 @@ function App() {
   }, []);
 
   useEffect(() => {
-    // Guardar carrito en localStorage cuando cambie
     localStorage.setItem('carrito', JSON.stringify(carrito));
   }, [carrito]);
 
@@ -44,7 +44,9 @@ function App() {
   };
 
   const agregarAlCarrito = (item) => {
-    const itemEnCarrito = carrito.find(i => i.id === item.id && i.size === item.size && i.milk === item.milk);
+    const itemEnCarrito = carrito.find(i => 
+      i.id === item.id && i.size === item.size && i.milk === item.milk
+    );
     if (itemEnCarrito) {
       setCarrito(carrito.map(i =>
         i.id === item.id && i.size === item.size && i.milk === item.milk
@@ -57,7 +59,9 @@ function App() {
   };
 
   const eliminarDelCarrito = (id, size, milk) => {
-    setCarrito(carrito.filter(item => !(item.id === id && item.size === size && item.milk === milk)));
+    setCarrito(carrito.filter(item => 
+      !(item.id === id && item.size === size && item.milk === milk)
+    ));
   };
 
   const actualizarCantidad = (id, cantidad, size, milk) => {
@@ -65,7 +69,9 @@ function App() {
       eliminarDelCarrito(id, size, milk);
     } else {
       setCarrito(carrito.map(item =>
-        item.id === id && item.size === size && item.milk === milk ? { ...item, cantidad } : item
+        item.id === id && item.size === size && item.milk === milk 
+          ? { ...item, cantidad } 
+          : item
       ));
     }
   };
@@ -81,6 +87,19 @@ function App() {
   const limpiarCarrito = () => {
     setCarrito([]);
     localStorage.removeItem('carrito');
+  };
+
+  const handleProcederPago = () => {
+    setShowConfirmacionPedido(true);
+  };
+
+  const handleConfirmPedido = () => {
+    setShowConfirmacionPedido(false);
+    // Aquí podrías navegar a la página de pago o realizar otras acciones necesarias
+  };
+
+  const handleCancelPedido = () => {
+    setShowConfirmacionPedido(false);
   };
 
   return (
@@ -105,6 +124,14 @@ function App() {
                   eliminarItem={eliminarDelCarrito}
                   actualizarCantidad={actualizarCantidad}
                   total={calcularTotal()}
+                  onProcederPago={handleProcederPago}
+                />
+              )}
+              {showConfirmacionPedido && (
+                <ConfirmacionPedido
+                  total={calcularTotal()}
+                  onConfirm={handleConfirmPedido}
+                  onCancel={handleCancelPedido}
                 />
               )}
             </main>

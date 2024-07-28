@@ -32,10 +32,7 @@ function Pago({ onSubmit, onCancel, total }) {
 
       const data = await response.json();
       
-      // Guardar el buyOrder en localStorage para usarlo después
       localStorage.setItem('currentBuyOrder', data.buyOrder);
-
-      // Redirigir a la página de pago de WebPay
       window.location.href = data.url;
     } catch (error) {
       setError(error.message);
@@ -48,20 +45,26 @@ function Pago({ onSubmit, onCancel, total }) {
     <div className="pago-overlay">
       <form className="pago-form" onSubmit={handleSubmit}>
         <h2>Información de Pago</h2>
-        <input
-          type="email"
-          placeholder="Correo electrónico"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-          required
-        />
-        <input
-          type="text"
-          placeholder="Nombre completo"
-          value={name}
-          onChange={(e) => setName(e.target.value)}
-          required
-        />
+        <div className="input-group">
+          <label htmlFor="email">Correo electrónico</label>
+          <input
+            id="email"
+            type="email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            required
+          />
+        </div>
+        <div className="input-group">
+          <label htmlFor="name">Nombre completo</label>
+          <input
+            id="name"
+            type="text"
+            value={name}
+            onChange={(e) => setName(e.target.value)}
+            required
+          />
+        </div>
         <div className="total-amount">
           <p>Total a pagar: ${total.toFixed(2)}</p>
         </div>
